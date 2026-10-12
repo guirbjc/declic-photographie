@@ -1,0 +1,321 @@
+/* Reset et base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Header transparent */
+header {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: transparent;
+  width: 100%;
+  position: absolute;
+  top: 1rem;
+  z-index: 10;
+}
+
+header h1 {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #444;
+}
+
+/* Modèle 3D en plein écran */
+.model-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+model-viewer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Bulles circulaires - Desktop */
+.info-bubbles {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  z-index: 100;
+}
+
+.info-bubbles.left {
+  left: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.info-bubbles.right {
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.info-bubble-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(200, 200, 200, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.info-bubble-circle:hover {
+  background-color: rgba(220, 220, 220, 0.9);
+}
+
+/* Style des icônes dans les bulles */
+.bubble-icon {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Cadre d'informations */
+.info-panel {
+  position: fixed;
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 80vw;
+  max-height: 85vh;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.info-panel.left {
+  left: calc(3rem + 60px + 2rem);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.info-panel.right {
+  right: calc(3rem + 60px + 2rem);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.info-panel.center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 700px;
+}
+
+.info-panel.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Conteneur du contenu du cadre */
+.info-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
+}
+
+/* Conteneur de texte défilable */
+.info-text-container-scrollable {
+  flex: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  overflow-y: auto; /* Active le défilement vertical uniquement pour cette partie */
+  -webkit-overflow-scrolling: touch; /* Pour un défilement fluide sur iOS */
+  max-height: 65vh; /* Limite la hauteur maximale pour activer le défilement */
+}
+
+/* Personnalisation de la barre de défilement pour Firefox */
+.info-text-container-scrollable {
+  scrollbar-width: thin; /* Largeur fine de la barre de défilement */
+  scrollbar-color: rgba(220, 220, 220, 0.2) rgba(255, 255, 255, 0.05); /* Couleurs de la poignée et de la piste */
+}
+
+/* Conteneur de texte */
+#info-text {
+  text-align: left;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+  padding-right: 10px; /* Espace pour la barre de défilement */
+}
+
+/* Conteneurs internes */
+.info-title-container,
+.info-image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Conteneur de l'image */
+.info-image-container {
+  flex: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+.info-content img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Cadre gauche : Titre - Texte - Schéma */
+.info-panel.left .info-content {
+  flex-direction: row;
+}
+
+.info-panel.left .info-title-container {
+  order: 1;
+  text-align: center;
+  flex: 2;
+}
+
+.info-panel.left .info-text-container-scrollable {
+  order: 2;
+  text-align: left;
+  flex: 10;
+}
+
+.info-panel.left .info-image-container {
+  order: 3;
+  flex: 8;
+}
+
+/* Cadre droit : Schéma - Texte - Titre */
+.info-panel.right .info-content {
+  flex-direction: row;
+}
+
+.info-panel.right .info-image-container {
+  order: 1;
+  flex: 8;
+}
+
+.info-panel.right .info-text-container-scrollable {
+  order: 2;
+  text-align: left;
+  flex: 10;
+}
+
+.info-panel.right .info-title-container {
+  order: 3;
+  text-align: center;
+  flex: 2;
+}
+
+.info-content h3 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #2c3e50;
+  margin: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: transparent;
+  width: 100%;
+  position: fixed;
+  bottom: 1rem;
+  z-index: 10;
+  color: #777;
+  font-size: 0.8rem;
+}
+
+/* Version mobile */
+@media (max-width: 768px) {
+  /* Bulles : 3 en haut, 3 en bas, centrées */
+  .info-bubbles.left,
+  .info-bubbles.right {
+    flex-direction: row;
+    justify-content: center;
+    left: 0;
+    right: 0;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .info-bubbles.left {
+    top: 15%;
+    transform: none;
+  }
+
+  .info-bubbles.right {
+    top: 80%;
+    transform: none;
+  }
+
+  .info-bubble-circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  /* Cadre centré en mobile */
+  .info-panel {
+    width: 90%;
+    max-height: none;
+    padding: 1.5rem;
+  }
+
+  .info-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-title-container,
+  .info-text-container-scrollable,
+  .info-image-container {
+    text-align: center;
+    padding: 0.5rem 0;
+    order: unset !important;
+  }
+
+  .info-text-container-scrollable {
+    max-height: 200px;
+    order: 2;
+  }
+
+  .info-image-container {
+    flex: 1;
+  }
+}
